@@ -2,7 +2,8 @@
     --white-color: white;
     --gold-color: #b99329;
     --black-color: black;
-    --gray-color: #a3a3a3;
+    --gray-color: #d3d3d3;
+    --dark-gray-color: #aaaaaa;
     --blue-color: #405caa;
 }
 
@@ -19,6 +20,11 @@ body {
 
 body::-webkit-scrollbar { 
     display: none;
+}
+
+img {
+    height: 20px;
+    width: 20px;
 }
 
 #topbar {
@@ -43,9 +49,45 @@ body::-webkit-scrollbar {
 #sidebar {
     display: flex;
     flex-direction: column;
-    gap: 25px;
-    padding: 25px 50px;
+    padding: 25px 25px;
     background-color: var(--gray-color);
+    color: var(--black-color);
+}
+
+#default-projects {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.project {
+    display: flex;
+    gap: 10px;
+    padding: 5px 10px;
+    border-style: none;
+    border-radius: 6px;
+    text-align: left;
+    font-size: 18px;
+}
+
+.project:hover {
+    background-color: var(--dark-gray-color);
+    border-radius: 6px;
+}
+
+#header-text {
+    margin-top: 25px;
+    margin-bottom: 12px;
+    font-size: 36px;
+}
+
+#user-projects {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-project {
+    margin: 5px 0;
 }
 
 #projects {
