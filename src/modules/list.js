@@ -3,11 +3,19 @@ export default class List {
         this.projects = [];
     }
 
+    getLength() {
+        return this.projects.length;
+    }
+
     addProject(project) {
         this.projects.push(project);
     }
 
-    deleteProject(index) {
+    removeProject(index) {
         delete this.projects[index];
+    }
+
+    getLength() {
+        return this.projects.length;
     }
 }
