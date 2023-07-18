@@ -11,7 +11,9 @@ export default class DOM {
         DOM.createTopBar(content);
         DOM.createMainContent(content);
         DOM.createSideBar();
+        DOM.createProjectContent();
         DOM.createProjectModal(content);
+        DOM.createTaskModal(content);
     }
 
     static createTopBar(element) {
@@ -40,7 +42,7 @@ export default class DOM {
         const projects = document.createElement('div');
 
         sidebar.setAttribute('id', 'sidebar');
-        projects.setAttribute('id', 'projects');
+        projects.setAttribute('id', 'project-content');
         container.setAttribute('id', 'container');
 
         container.appendChild(sidebar);
@@ -123,7 +125,8 @@ export default class DOM {
         const submitBtn = document.createElement('button');
 
         title.textContent = 'Add New Project';
-        closeBtn.classList.add('close-btn');
+        closeBtn.setAttribute('id', 'project-close');
+        closeBtn.classList.add('close-btn')
         closeBtn.textContent = '\xD7';
         form.setAttribute('action', '#');
         form.classList.add('form');
@@ -138,7 +141,8 @@ export default class DOM {
         form.appendChild(inputBox);
 
         submitBtn.setAttribute('type', 'submit');
-        submitBtn.setAttribute('id', 'submit-btn');
+        submitBtn.setAttribute('id', 'project-submit');
+        submitBtn.classList.add('submit-btn');
         submitBtn.textContent = 'Add';
 
         formContainer.appendChild(title);
@@ -179,5 +183,116 @@ export default class DOM {
 
         userProjects.appendChild(project);
         projectName.value = '';
+    }
+
+    static createTaskModal(element) {
+        const modal = document.createElement('div');
+        const overlay = document.createElement('div');
+        const formContainer = document.createElement('div');
+
+        modal.classList.add('add-task-modal');
+        overlay.classList.add('overlay');
+        overlay.setAttribute('id', 'task-overlay');
+        formContainer.classList.add('add-task-form');
+        
+        //----------------------Form Variables----------------------//
+        const title = document.createElement('div');
+        const closeBtn = document.createElement('div');
+        const form = document.createElement('form');
+
+        title.textContent = 'Add New Project';
+        closeBtn.setAttribute('id', 'task-close');
+        closeBtn.classList.add('close-btn');
+        closeBtn.textContent = '\xD7';
+        form.setAttribute('action', '#');
+        form.setAttribute('id', 'task-form');
+
+        //----------------------Input Variables----------------------//
+        const titleInput = document.createElement('input');
+        const descriptionInput = document.createElement('textarea');
+        const dateLabel = document.createElement('label');
+        const dateInput = document.createElement('input');
+        const priorityLabel = document.createElement('label');
+        const priorityInput = document.createElement('select');
+        const lowOption = document.createElement('option');
+        const mediumOption = document.createElement('option');
+        const highOption = document.createElement('option');
+        const submitBtn = document.createElement('button');
+        
+        titleInput.type = 'text';
+        titleInput.name = 'title';
+        titleInput.placeholder = 'Title';
+        titleInput.setAttribute('id', 'title');
+        form.appendChild(titleInput);
+
+        descriptionInput.rows = 5;
+        descriptionInput.cols = 50;
+        descriptionInput.name = 'description';
+        descriptionInput.placeholder = 'Description';
+        descriptionInput.setAttribute('id', 'description');
+        form.appendChild(descriptionInput);
+
+        dateLabel.setAttribute('for', 'date');
+        dateLabel.textContent = 'Due Date';
+        form.appendChild(dateLabel);
+
+        dateInput.type = 'date';
+        dateInput.name = 'date';
+        dateInput.setAttribute('id', 'date');
+        form.appendChild(dateInput);
+
+        priorityLabel.setAttribute('for', 'priority');
+        priorityLabel.textContent = 'Priority';
+        form.appendChild(priorityLabel);
+
+        priorityInput.name = 'priority'
+        priorityInput.setAttribute('id', 'priority');
+        lowOption.value = 'Low';
+        lowOption.textContent = 'Low';
+        mediumOption.value = 'Medium';
+        mediumOption.textContent = 'Medium';
+        highOption.value = 'High';
+        highOption.textContent = 'High';
+        priorityInput.appendChild(lowOption);
+        priorityInput.appendChild(mediumOption);
+        priorityInput.appendChild(highOption);
+        form.appendChild(priorityInput);
+
+        submitBtn.setAttribute('type', 'submit');
+        submitBtn.setAttribute('id', 'task-submit');
+        submitBtn.classList.add('submit-btn');
+        submitBtn.textContent = 'Add';
+
+        formContainer.appendChild(title);
+        formContainer.appendChild(closeBtn);
+        formContainer.appendChild(form);
+        formContainer.appendChild(submitBtn);
+
+        modal.appendChild(overlay);
+        modal.appendChild(formContainer);
+
+        element.appendChild(modal);
+    }
+
+    static toggleTaskModal () {
+        const modal = document.querySelector('.add-task-modal');
+        modal.classList.toggle('active');
+    }
+
+    static createProjectContent() {
+        const container = document.getElementById('container');
+        const projectContent = document.getElementById('project-content');
+        const addTaskBtn = document.createElement('button');
+        const tasks = document.createElement('div');
+
+        addTaskBtn.setAttribute('id', 'add-task');
+        addTaskBtn.textContent = '+ Add Task';
+
+        tasks.setAttribute('id', 'tasks');
+
+        projectContent.appendChild(addTaskBtn);
+        projectContent.appendChild(tasks);
+
+        container.appendChild(projectContent);
     }
 }
