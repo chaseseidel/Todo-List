@@ -1,136 +1,208 @@
 import Logo from '../img/checklist.png';
 import todayPNG from '../img/today.png';
 import weekPNG from '../img/week.png';
+import projectIcon from '../img/project.png';
+import deleteIcon from '../img/trash.png'
 
-export default function createTopBar(element) {
-    const topbar = document.createElement('div');
-    const header = document.createElement('h1');
-    const image = new Image();
+export default class DOM {
 
-    image.setAttribute('id', 'logo');
-    image.alt = "Checklist";
-    image.src = Logo;
+    static loadHomePage() {
+        const content = document.getElementById('content');
+        DOM.createTopBar(content);
+        DOM.createMainContent(content);
+        DOM.createSideBar();
+        DOM.createProjectModal(content);
+        DOM.addProjectListener();
+        DOM.createProject();
+    }
 
-    header.setAttribute('id', 'logo-name');
-    header.textContent = 'ToDo List';
+    static createTopBar(element) {
+        const topbar = document.createElement('div');
+        const header = document.createElement('h1');
+        const image = new Image();
 
-    topbar.setAttribute('id', 'topbar');
+        image.setAttribute('id', 'logo');
+        image.alt = "Checklist";
+        image.src = Logo;
 
-    topbar.appendChild(image);
-    topbar.appendChild(header);
+        header.setAttribute('id', 'logo-name');
+        header.textContent = 'ToDo List';
 
-    element.appendChild(topbar);
-}
+        topbar.setAttribute('id', 'topbar');
 
-export function createMainContent(element) {
-    const container = document.createElement('div');
-    const sidebar = document.createElement('nav');
-    const projects = document.createElement('div');
+        topbar.appendChild(image);
+        topbar.appendChild(header);
 
-    sidebar.setAttribute('id', 'sidebar');
-    projects.setAttribute('id', 'projects');
-    container.setAttribute('id', 'container');
+        element.appendChild(topbar);
+    }
 
-    container.appendChild(sidebar);
-    container.appendChild(projects);
+    static createMainContent(element) {
+        const container = document.createElement('div');
+        const sidebar = document.createElement('nav');
+        const projects = document.createElement('div');
 
-    element.appendChild(container);
-}
+        sidebar.setAttribute('id', 'sidebar');
+        projects.setAttribute('id', 'projects');
+        container.setAttribute('id', 'container');
 
-export function createSideBar() {
-    const sidebar = document.getElementById('sidebar');
-    const defaultProjects = document.createElement('div');
-    const header = document.createElement('h1');
-    const userProjects = document.createElement('div');
-    const addProject = document.createElement('button');
+        container.appendChild(sidebar);
+        container.appendChild(projects);
 
-    //----------------------Default Projects----------------------//
-    const today = document.createElement('button');
-    const todayIcon = new Image();
-    const todayText = document.createElement('p');
+        element.appendChild(container);
+    }
 
-    todayIcon.src = todayPNG;
-    todayIcon.alt = 'Today Icon';
-    today.classList.add('project');
-    todayText.textContent = 'Today';
+    static createSideBar() {
+        const sidebar = document.getElementById('sidebar');
+        const defaultProjects = document.createElement('div');
+        const header = document.createElement('h1');
+        const userProjects = document.createElement('div');
+        const addProject = document.createElement('button');
 
-    today.appendChild(todayIcon);
-    today.appendChild(todayText);
+        //----------------------Default Projects----------------------//
+        const today = document.createElement('button');
+        const todayIcon = new Image();
+        const todayText = document.createElement('p');
 
-    const week = document.createElement('button');
-    const weekIcon = new Image();
-    const weekText = document.createElement('p');
+        todayIcon.src = todayPNG;
+        todayIcon.alt = 'Today Icon';
+        today.classList.add('project');
+        todayText.textContent = 'Today';
 
-    weekIcon.src = weekPNG;
-    weekIcon.alt = 'Week Icon';
-    week.classList.add('project');
-    weekText.textContent = 'This Week';
+        today.appendChild(todayIcon);
+        today.appendChild(todayText);
 
-    week.appendChild(weekIcon);
-    week.appendChild(weekText);
+        const week = document.createElement('button');
+        const weekIcon = new Image();
+        const weekText = document.createElement('p');
 
-    defaultProjects.setAttribute('id', 'default-projects');
-    defaultProjects.appendChild(today)
-    defaultProjects.appendChild(week);
+        weekIcon.src = weekPNG;
+        weekIcon.alt = 'Week Icon';
+        week.classList.add('project');
+        weekText.textContent = 'This Week';
 
-    //----------------------Header----------------------//
-    header.textContent = 'Projects';
-    header.setAttribute('id', 'header-text');
+        week.appendChild(weekIcon);
+        week.appendChild(weekText);
 
-    //----------------------Add Project----------------------//
-    addProject.classList.add('project');
-    addProject.setAttribute('id', 'add-project');
-    addProject.textContent = '+ Add Project';
+        defaultProjects.setAttribute('id', 'default-projects');
+        defaultProjects.appendChild(today)
+        defaultProjects.appendChild(week);
 
-    //----------------------Sidebar----------------------//
-    sidebar.appendChild(defaultProjects);
-    sidebar.appendChild(header);
-    sidebar.appendChild(addProject);
-}
+        //----------------------Header----------------------//
+        header.textContent = 'Projects';
+        header.setAttribute('id', 'header-text');
 
-export function createProjectModal(element) {
-    const modal = document.createElement('div');
-    const overlay = document.createElement('div');
-    const formContainer = document.createElement('div');
+        //----------------------User Projects----------------------//
+        userProjects.setAttribute('id', 'user-projects');
 
-    modal.classList.add('add-project-modal');
-    overlay.classList.add('overlay');
-    formContainer.classList.add('add-project-form');
-    
-    //----------------------Form Variables----------------------//
-    const title = document.createElement('div');
-    const closeBtn = document.createElement('div');
-    const form = document.createElement('form');
-    const inputBox = document.createElement('div');
-    const input = document.createElement('input');
-    const submitBtn = document.createElement('button');
+        //----------------------Add Project----------------------//
+        addProject.classList.add('project');
+        addProject.setAttribute('id', 'add-project');
+        addProject.textContent = '+ Add Project';
 
-    title.textContent = 'Add New Project';
-    closeBtn.classList.add('close-btn');
-    closeBtn.textContent = '\xD7';
-    form.setAttribute('action', '#');
-    form.classList.add('form');
-    
-    inputBox.classList.add('input');
-    input.type = 'text';
-    input.name = 'name';
-    input.placeholder = 'Name';
-    input.setAttribute('id', 'name');
-    inputBox.appendChild(input);
+        //----------------------Sidebar----------------------//
+        sidebar.appendChild(defaultProjects);
+        sidebar.appendChild(header);
+        sidebar.appendChild(userProjects);
+        sidebar.appendChild(addProject);
+    }
 
-    form.appendChild(inputBox);
+    static createProjectModal(element) {
+        const modal = document.createElement('div');
+        const overlay = document.createElement('div');
+        const formContainer = document.createElement('div');
 
-    submitBtn.setAttribute('type', 'submit');
-    submitBtn.setAttribute('id', 'submit-btn');
-    submitBtn.textContent = 'Add';
+        modal.classList.add('add-project-modal');
+        overlay.classList.add('overlay');
+        overlay.setAttribute('id', 'project-overlay');
+        formContainer.classList.add('add-project-form');
+        
+        //----------------------Form Variables----------------------//
+        const title = document.createElement('div');
+        const closeBtn = document.createElement('div');
+        const form = document.createElement('form');
+        const inputBox = document.createElement('div');
+        const input = document.createElement('input');
+        const submitBtn = document.createElement('button');
 
-    formContainer.appendChild(title);
-    formContainer.appendChild(closeBtn);
-    formContainer.appendChild(form);
-    formContainer.appendChild(submitBtn);
+        title.textContent = 'Add New Project';
+        closeBtn.classList.add('close-btn');
+        closeBtn.textContent = '\xD7';
+        form.setAttribute('action', '#');
+        form.classList.add('form');
+        
+        inputBox.classList.add('input');
+        input.type = 'text';
+        input.name = 'name';
+        input.placeholder = 'Name';
+        input.setAttribute('id', 'name');
+        inputBox.appendChild(input);
 
-    modal.appendChild(overlay);
-    modal.appendChild(formContainer);
+        form.appendChild(inputBox);
 
-    element.appendChild(modal);
+        submitBtn.setAttribute('type', 'submit');
+        submitBtn.setAttribute('id', 'submit-btn');
+        submitBtn.textContent = 'Add';
+
+        formContainer.appendChild(title);
+        formContainer.appendChild(closeBtn);
+        formContainer.appendChild(form);
+        formContainer.appendChild(submitBtn);
+
+        modal.appendChild(overlay);
+        modal.appendChild(formContainer);
+
+        element.appendChild(modal);
+    }
+
+    static addProjectListener() {
+        const addProject = document.getElementById('add-project');
+        const closeBtn = document.querySelector('.close-btn');
+        const overlay = document.getElementById('project-overlay');
+
+        addProject.addEventListener('click', () => {
+            DOM.toggleProjectModal();
+        });
+
+        closeBtn.addEventListener('click', () => {
+            DOM.toggleProjectModal();
+        });
+
+        overlay.addEventListener('click', () => {
+            DOM.toggleProjectModal();
+        });
+    }
+
+    static createProject() {
+        const submitBtn = document.getElementById('submit-btn');
+        const userProjects = document.getElementById('user-projects');
+
+        submitBtn.addEventListener('click', () => {
+            const project = document.createElement('button');
+            const image = new Image();
+            const name = document.createElement('p');
+            const value = document.getElementById('name').value;
+            const deleteBtn = new Image()
+
+            project.className = 'user-project project';
+            image.src = projectIcon;
+            image.alt = 'Project Icon';
+            name.textContent = value;
+            deleteBtn.src = deleteIcon;
+            deleteBtn.alt = 'Delete Icon';
+            deleteBtn.classList.add('delete');
+
+            project.appendChild(image);
+            project.appendChild(name);
+            project.appendChild(deleteBtn);
+
+            userProjects.appendChild(project);
+
+            DOM.toggleProjectModal();
+        })
+    } 
+
+    static toggleProjectModal () {
+        const modal = document.querySelector('.add-project-modal');
+        modal.classList.toggle('active');
+    }
 }
