@@ -12,8 +12,6 @@ export default class DOM {
         DOM.createMainContent(content);
         DOM.createSideBar();
         DOM.createProjectModal(content);
-        DOM.addProjectListener();
-        DOM.createProject();
     }
 
     static createTopBar(element) {
@@ -154,55 +152,32 @@ export default class DOM {
         element.appendChild(modal);
     }
 
-    static addProjectListener() {
-        const addProject = document.getElementById('add-project');
-        const closeBtn = document.querySelector('.close-btn');
-        const overlay = document.getElementById('project-overlay');
-
-        addProject.addEventListener('click', () => {
-            DOM.toggleProjectModal();
-        });
-
-        closeBtn.addEventListener('click', () => {
-            DOM.toggleProjectModal();
-        });
-
-        overlay.addEventListener('click', () => {
-            DOM.toggleProjectModal();
-        });
-    }
-
-    static createProject() {
-        const submitBtn = document.getElementById('submit-btn');
-        const userProjects = document.getElementById('user-projects');
-
-        submitBtn.addEventListener('click', () => {
-            const project = document.createElement('button');
-            const image = new Image();
-            const name = document.createElement('p');
-            const value = document.getElementById('name').value;
-            const deleteBtn = new Image()
-
-            project.className = 'user-project project';
-            image.src = projectIcon;
-            image.alt = 'Project Icon';
-            name.textContent = value;
-            deleteBtn.src = deleteIcon;
-            deleteBtn.alt = 'Delete Icon';
-            deleteBtn.classList.add('delete');
-
-            project.appendChild(image);
-            project.appendChild(name);
-            project.appendChild(deleteBtn);
-
-            userProjects.appendChild(project);
-
-            DOM.toggleProjectModal();
-        })
-    } 
-
     static toggleProjectModal () {
         const modal = document.querySelector('.add-project-modal');
         modal.classList.toggle('active');
+    }
+
+    static createProject() {
+        const userProjects = document.getElementById('user-projects');
+        const project = document.createElement('button');
+        const image = new Image();
+        const name = document.createElement('p');
+        const projectName = document.getElementById('name');
+        const deleteBtn = new Image()
+
+        project.className = 'user-project project';
+        image.src = projectIcon;
+        image.alt = 'Project Icon';
+        name.textContent = projectName.value;
+        deleteBtn.src = deleteIcon;
+        deleteBtn.alt = 'Delete Icon';
+        deleteBtn.classList.add('delete');
+
+        project.appendChild(image);
+        project.appendChild(name);
+        project.appendChild(deleteBtn);
+
+        userProjects.appendChild(project);
+        projectName.value = '';
     }
 }
