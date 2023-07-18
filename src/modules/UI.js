@@ -1,43 +1,68 @@
-import Logo from '../img/checklist.png';
+import Project from "./project";
+import Task from "./task";
+import List from "./list";
+import DOM from './elements';
 
-export default function createUI() {
-    const content = document.getElementById('content');
+export default class UI {
+    static loadUI() {
+        const ToDoList = new List();
 
-    createTopBar(content);
-    createMainContent(content);
-}
+        UI.Project(ToDoList);
+    }
 
-function createTopBar(element) {
-    const topbar = document.createElement('div');
-    const header = document.createElement('h1');
-    const image = new Image();
+    static Project(list) {
+        UI.addProject();
+        UI.createProject(list);
+    }
 
-    image.setAttribute('id', 'logo');
-    image.alt = "Checklist";
-    image.src = Logo;
+    static addProject() {
+        const addProject = document.getElementById('add-project');
+        const closeBtn = document.querySelector('.close-btn');
+        const overlay = document.getElementById('project-overlay');
 
-    header.setAttribute('id', 'logo-name');
-    header.textContent = 'ToDo List';
+        addProject.addEventListener('click', () => {
+            DOM.toggleProjectModal();
+        });
 
-    topbar.setAttribute('id', 'topbar');
+        closeBtn.addEventListener('click', () => {
+            DOM.toggleProjectModal();
+        });
 
-    topbar.appendChild(image);
-    topbar.appendChild(header);
+        overlay.addEventListener('click', () => {
+            DOM.toggleProjectModal();
+        });
+    }
 
-    element.appendChild(topbar);
-}
+    static createProjectElement(list) {
+        const submitBtn = document.getElementById('submit-btn');
 
-function createMainContent(element) {
-    const container = document.createElement('div');
-    const sidebar = document.createElement('div');
-    const projects = document.createElement('div');
+        submitBtn.addEventListener('click', () => {
+            DOM.createProject();
+            DOM.toggleProjectModal();
 
-    sidebar.setAttribute('id', 'sidebar');
-    projects.setAttribute('id', 'projects');
-    container.setAttribute('id', 'container');
+            const deleteBtn = document.getElementById('user-projects').lastChild.lastChild;
+            deleteBtn.addEventListener('click', () => {
+                list.removeProject()
+            })
+        })
+    } 
 
-    container.appendChild(sidebar);
-    container.appendChild(projects);
+    static createProject(list) {
+        const submitBtn = document.getElementById('submit-btn');
 
-    element.appendChild(container);
+        submitBtn.addEventListener('click', () => {
+            const name = document.getElementById('name');
+            const project = new Project(name.value, list.getLength());
+            list.addProject(project);
+
+            DOM.createProject();
+            DOM.toggleProjectModal();
+
+            const deleteBtn = document.getElementById('user-projects').lastChild.lastChild;
+            deleteBtn.addEventListener('click', () => {
+                list.removeProject(project.getID);
+                deleteBtn.parentNode.parentNode.removeChild(deleteBtn.parentNode);
+            })
+        })
+    }
 }
