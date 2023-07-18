@@ -11,7 +11,7 @@ export default class DOM {
         DOM.createTopBar(content);
         DOM.createMainContent(content);
         DOM.createSideBar();
-        DOM.createProjectContent();
+        DOM.createTaskButton();
         DOM.createProjectModal(content);
         DOM.createTaskModal(content);
     }
@@ -279,7 +279,7 @@ export default class DOM {
         modal.classList.toggle('active');
     }
 
-    static createProjectContent() {
+    static createTaskButton() {
         const container = document.getElementById('container');
         const projectContent = document.getElementById('project-content');
         const addTaskBtn = document.createElement('button');
