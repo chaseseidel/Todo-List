@@ -87,3 +87,50 @@ export function createSideBar() {
     sidebar.appendChild(header);
     sidebar.appendChild(addProject);
 }
+
+export function createProjectModal(element) {
+    const modal = document.createElement('div');
+    const overlay = document.createElement('div');
+    const formContainer = document.createElement('div');
+
+    modal.classList.add('add-project-modal');
+    overlay.classList.add('overlay');
+    formContainer.classList.add('add-project-form');
+    
+    //----------------------Form Variables----------------------//
+    const title = document.createElement('div');
+    const closeBtn = document.createElement('div');
+    const form = document.createElement('form');
+    const inputBox = document.createElement('div');
+    const input = document.createElement('input');
+    const submitBtn = document.createElement('button');
+
+    title.textContent = 'Add New Project';
+    closeBtn.classList.add('close-btn');
+    closeBtn.textContent = '\xD7';
+    form.setAttribute('action', '#');
+    form.classList.add('form');
+    
+    inputBox.classList.add('input');
+    input.type = 'text';
+    input.name = 'name';
+    input.placeholder = 'Name';
+    input.setAttribute('id', 'name');
+    inputBox.appendChild(input);
+
+    form.appendChild(inputBox);
+
+    submitBtn.setAttribute('type', 'submit');
+    submitBtn.setAttribute('id', 'submit-btn');
+    submitBtn.textContent = 'Add';
+
+    formContainer.appendChild(title);
+    formContainer.appendChild(closeBtn);
+    formContainer.appendChild(form);
+    formContainer.appendChild(submitBtn);
+
+    modal.appendChild(overlay);
+    modal.appendChild(formContainer);
+
+    element.appendChild(modal);
+}
