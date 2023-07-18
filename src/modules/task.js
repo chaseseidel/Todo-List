@@ -4,6 +4,7 @@ export default class Task {
         this.description = description;
         this.date = date;
         this.priority = priority;
+        this.completed = false;
     }
 
     getTitle() {
