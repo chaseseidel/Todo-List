@@ -2,7 +2,9 @@ import Logo from '../img/checklist.png';
 import todayPNG from '../img/today.png';
 import weekPNG from '../img/week.png';
 import projectIcon from '../img/project.png';
-import deleteIcon from '../img/trash.png'
+import deleteIcon from '../img/trash.png';
+import editIcon from '../img/edit.png';
+import completeIcon from '../img/checkmark.png';
 
 export default class DOM {
 
@@ -294,5 +296,54 @@ export default class DOM {
         projectContent.appendChild(tasks);
 
         container.appendChild(projectContent);
+    }
+
+    static createTask(date) {
+        const taskContainer = document.getElementById('tasks');
+        const task = document.createElement('div');
+        const top = document.createElement('div');
+
+        //----------------------Top Bar----------------------//
+        const taskTitle = document.createElement('h2');
+        const icons = document.createElement('div');
+        const edit = new Image();
+        const complete = new Image();
+        const deleteBtn = new Image()
+        const title = document.getElementById('title');
+
+        taskTitle.textContent = title.value;
+        edit.src = editIcon;
+        edit.alt = 'Edit Icon';
+        edit.classList.add('edit');
+
+        complete.src = completeIcon;
+        complete.alt = 'Complete Icon';
+        complete.classList.add('complete');
+
+        deleteBtn.src = deleteIcon;
+        deleteBtn.alt = 'Delete Icon';
+        deleteBtn.classList.add('task-delete');
+
+        icons.classList.add('task-icons');
+        icons.appendChild(edit);
+        icons.appendChild(complete);
+        icons.appendChild(deleteBtn);
+
+        top.classList.add('task-top-bar');
+        top.appendChild(taskTitle);
+        top.appendChild(icons);
+
+        //----------------------Bottom----------------------//
+        const dateText = document.createElement('p');
+        dateText.textContent = date;
+
+        //----------------------Task Box----------------------//
+        const priority = document.getElementById('priority');
+        task.className = 'task '+ priority.value;
+
+        task.appendChild(top);
+        task.appendChild(dateText);
+
+        taskContainer.appendChild(task);
     }
 }
