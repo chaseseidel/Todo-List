@@ -367,6 +367,40 @@ export default class DOM {
         formPriority.value = 'Low';
     }
 
+    static createStrippedTask(title, date, priority, completed) {
+        const taskContainer = document.getElementById('tasks');
+        const task = document.createElement('div');
+        const top = document.createElement('div');
+
+        //----------------------Top Bar----------------------//
+        const taskTitle = document.createElement('h2');
+
+        taskTitle.textContent = title;
+        taskTitle.classList.add('task-title');
+
+        top.classList.add('task-top-bar');
+        top.appendChild(taskTitle);
+
+        //----------------------Bottom----------------------//
+        const dateText = document.createElement('p');
+        dateText.classList.add('date');
+        dateText.textContent = 'Due: ' + date;
+
+        //----------------------Task Box----------------------//
+        task.classList.add('task');
+
+        if (completed === false) {
+            task.classList.add(priority);
+        } else {
+            task.classList.add('complete-task');
+        }
+
+        task.appendChild(top);
+        task.appendChild(dateText);
+
+        taskContainer.appendChild(task);
+    }
+
     static removeTasks() {
         const taskContainer = document.getElementById('tasks');
 
