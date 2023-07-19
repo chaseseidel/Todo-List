@@ -55,4 +55,12 @@ export default class Task {
     undoCompletion() {
         this.completed = false;
     }
+
+    getDateFormatted() {
+        const date = this.date.split('-');
+        const day = date[2];
+        const month = date[1];
+        const year = date[0];
+        return `${month}/${day}/${year}`;
+    }
 }
