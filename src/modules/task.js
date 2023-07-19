@@ -40,6 +40,10 @@ export default class Task {
         this.priority = priority;
     }
 
+    get getCompletion() {
+        return this.completed;
+    }
+
     get getID() {
         return this.id;
     }
