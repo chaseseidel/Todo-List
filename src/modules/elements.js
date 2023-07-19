@@ -69,6 +69,7 @@ export default class DOM {
         todayIcon.src = todayPNG;
         todayIcon.alt = 'Today Icon';
         today.classList.add('project');
+        today.setAttribute('id', 'today');
         todayText.textContent = 'Today';
 
         today.appendChild(todayIcon);
@@ -81,6 +82,7 @@ export default class DOM {
         weekIcon.src = weekPNG;
         weekIcon.alt = 'Week Icon';
         week.classList.add('project');
+        week.setAttribute('id', 'week');
         weekText.textContent = 'This Week';
 
         week.appendChild(weekIcon);
