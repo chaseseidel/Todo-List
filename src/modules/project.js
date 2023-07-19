@@ -24,4 +24,8 @@ export default class Project {
     removeTask(index) {
         delete this.tasks[index];
     }
+
+    getLength() {
+        return this.tasks.length;
+    }
 }
