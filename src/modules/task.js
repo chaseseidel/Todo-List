@@ -7,35 +7,35 @@ export default class Task {
         this.completed = false;
     }
 
-    getTitle() {
+    get getTitle() {
         return this.title;
     }
 
-    setTitle(title) {
+    set setTitle(title) {
         this.title = title;
     }
 
-    getDescription() {
+    get getDescription() {
         return this.description;
     }
 
-    setDescription(description) {
+    set setDescription(description) {
         this.description = description;
     }
 
-    getDate() {
+    get getDate() {
         return this.date;
     }
 
-    setDate(date) {
+    set setDate(date) {
         this.date = date;
     }
 
-    getPriority() {
+    get getPriority() {
         return this.priority;
     }
 
-    setPriority(priority) {
+    set setPriority(priority) {
         this.priority = priority;
     }
 }
