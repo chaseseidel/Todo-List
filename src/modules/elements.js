@@ -298,7 +298,7 @@ export default class DOM {
         container.appendChild(projectContent);
     }
 
-    static createTask(date) {
+    static createTask(title, date, priority) {
         const taskContainer = document.getElementById('tasks');
         const task = document.createElement('div');
         const top = document.createElement('div');
@@ -309,9 +309,8 @@ export default class DOM {
         const edit = new Image();
         const complete = new Image();
         const deleteBtn = new Image()
-        const title = document.getElementById('title');
 
-        taskTitle.textContent = title.value;
+        taskTitle.textContent = title;
         edit.src = editIcon;
         edit.alt = 'Edit Icon';
         edit.classList.add('edit');
@@ -338,8 +337,8 @@ export default class DOM {
         dateText.textContent = date;
 
         //----------------------Task Box----------------------//
-        const priority = document.getElementById('priority');
-        task.className = 'task '+ priority.value;
+        task.classList.add('task');
+        task.classList.add(priority);
 
         task.appendChild(top);
         task.appendChild(dateText);
