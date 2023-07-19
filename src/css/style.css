@@ -118,7 +118,7 @@ img {
     background-color: var(--white-color);
 }
 
-.add-project-modal .overlay, .add-task-modal .overlay {
+.add-project-modal .overlay, .add-task-modal .overlay, .edit-modal .overlay {
     background-color: rgba(0, 0, 0, 0.5);
     height: 100vh;
     width: 100vw;
@@ -130,7 +130,7 @@ img {
     display: none;
 }
 
-.add-project-modal .add-project-form, .add-task-modal .add-task-form {
+.add-project-modal .add-project-form, .add-task-modal .add-task-form, .edit-modal .edit-form {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -146,7 +146,7 @@ img {
     padding: 25px 50px;
 }
 
-#task-form {
+#task-form, #edit-form {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -157,7 +157,7 @@ img {
     width: calc(100% - 12px);
 }
 
-#description {
+#description, #taskDescription {
     resize: none;
     padding: 5px;
     font-size: 1.2rem;
@@ -167,10 +167,10 @@ img {
     Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-.add-project-modal.active .overlay, .add-task-modal.active .overlay {
+.add-project-modal.active .overlay, .add-task-modal.active .overlay, .edit-modal.active .overlay {
     display: flex;
 }
-.add-project-modal.active .add-project-form, .add-task-modal.active .add-task-form {
+.add-project-modal.active .add-project-form, .add-task-modal.active .add-task-form, .edit-modal.active .edit-form {
     transition: all 200ms ease-in-out;
     transform: translate(-50%, -50%) scale(1);
 }
@@ -252,7 +252,7 @@ label {
 #tasks {
     display: grid;
     grid-template-columns: repeat(4, minmax(300px, 1fr));
-    grid-auto-rows: 125px;
+    grid-auto-rows: 100px;
     gap: 50px;
     padding: 25px 50px;
 }
@@ -262,6 +262,7 @@ label {
     flex-direction: column;
     justify-content: space-between;
     padding: 15px 20px;
+    gap: 20px;
     background-color: var(--gray-color-2);
     color: var(--black-color);
     border-radius: 6px;
@@ -269,21 +270,27 @@ label {
     font-size: 1.2rem;
 }
 
-#high {
+.High {
     border-left: 10px solid var(--red-color);
 }
 
-#medium {
+.Medium {
     border-left: 10px solid var(--yellow-color);
 }
 
-#low {
+.Low {
     border-left: 10px solid var(--green-color);
+}
+
+.complete-task {
+    border-left: 10px solid var(--gray-color-1);
+    text-decoration: line-through;
 }
 
 .task-top-bar, .task-bottom-bar {
     display: grid;
     grid-template-columns: auto auto;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -291,12 +298,17 @@ label {
     font-size: 1.8rem;
 }
 
-.edit, .complete {
-    justify-self: flex-end;
-    height: 30px;
-    width: 30px;
+.task-icons {
+    display: flex;
+    gap: 5px;
 }
 
-.edit:hover, .complete:hover {
-    transform: scale(1.05);
+.edit, .complete, .task-delete {
+    justify-self: flex-end;
+    height: 20px;
+    width: 20px;
+}
+
+.edit:hover, .complete:hover, .task-delete:hover {
+    transform: scale(1.1);
 }
