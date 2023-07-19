@@ -16,6 +16,7 @@ export default class DOM {
         DOM.createTaskButton();
         DOM.createProjectModal(content);
         DOM.createTaskModal(content);
+        DOM.createEditModal(content);
     }
 
     static createTopBar(element) {
@@ -298,7 +299,7 @@ export default class DOM {
         container.appendChild(projectContent);
     }
 
-    static createTask(title, date, priority) {
+    static createTask(title, date, priority, completed) {
         const taskContainer = document.getElementById('tasks');
         const task = document.createElement('div');
         const top = document.createElement('div');
@@ -311,6 +312,7 @@ export default class DOM {
         const deleteBtn = new Image()
 
         taskTitle.textContent = title;
+        taskTitle.classList.add('task-title');
         edit.src = editIcon;
         edit.alt = 'Edit Icon';
         edit.classList.add('edit');
@@ -334,15 +336,134 @@ export default class DOM {
 
         //----------------------Bottom----------------------//
         const dateText = document.createElement('p');
-        dateText.textContent = date;
+        dateText.classList.add('date');
+        dateText.textContent = 'Due: ' + date;
 
         //----------------------Task Box----------------------//
         task.classList.add('task');
-        task.classList.add(priority);
+
+        if (completed === false) {
+            task.classList.add(priority);
+        } else {
+            task.classList.add('complete-task');
+        }
 
         task.appendChild(top);
         task.appendChild(dateText);
 
         taskContainer.appendChild(task);
+
+        //----------------------Form Variables----------------------//
+        const formTitle = document.getElementById('title');
+        const formDescription = document.getElementById('description');
+        const formDate = document.getElementById('date');
+        const formPriority = document.getElementById('priority');
+
+        formTitle.value = '';
+        formDescription.value = '';
+        formDate.value = '';
+        formPriority.value = 'Low';
+    }
+
+    static removeTasks() {
+        const taskContainer = document.getElementById('tasks');
+
+        while (taskContainer.firstChild) {
+            taskContainer.removeChild(taskContainer.firstChild);
+        }
+    }
+
+    static createEditModal(element) {
+        const modal = document.createElement('div');
+        const overlay = document.createElement('div');
+        const formContainer = document.createElement('div');
+
+        modal.classList.add('edit-modal');
+        overlay.classList.add('overlay');
+        overlay.setAttribute('id', 'edit-overlay');
+        formContainer.classList.add('edit-form');
+        
+        //----------------------Form Variables----------------------//
+        const title = document.createElement('div');
+        const closeBtn = document.createElement('div');
+        const form = document.createElement('form');
+
+        title.textContent = 'Edit Project';
+        closeBtn.setAttribute('id', 'edit-close');
+        closeBtn.classList.add('close-btn');
+        closeBtn.textContent = '\xD7';
+        form.setAttribute('action', '#');
+        form.setAttribute('id', 'edit-form');
+
+        //----------------------Input Variables----------------------//
+        const titleInput = document.createElement('input');
+        const descriptionInput = document.createElement('textarea');
+        const dateLabel = document.createElement('label');
+        const dateInput = document.createElement('input');
+        const priorityLabel = document.createElement('label');
+        const priorityInput = document.createElement('select');
+        const lowOption = document.createElement('option');
+        const mediumOption = document.createElement('option');
+        const highOption = document.createElement('option');
+        const submitBtn = document.createElement('button');
+        
+        titleInput.type = 'text';
+        titleInput.name = 'title';
+        titleInput.placeholder = 'Title';
+        titleInput.setAttribute('id', 'taskTitle');
+        form.appendChild(titleInput);
+
+        descriptionInput.rows = 5;
+        descriptionInput.cols = 50;
+        descriptionInput.name = 'description';
+        descriptionInput.placeholder = 'Description';
+        descriptionInput.setAttribute('id', 'taskDescription');
+        form.appendChild(descriptionInput);
+
+        dateLabel.setAttribute('for', 'date');
+        dateLabel.textContent = 'Due Date';
+        form.appendChild(dateLabel);
+
+        dateInput.type = 'date';
+        dateInput.name = 'date';
+        dateInput.setAttribute('id', 'taskDate');
+        form.appendChild(dateInput);
+
+        priorityLabel.setAttribute('for', 'priority');
+        priorityLabel.textContent = 'Priority';
+        form.appendChild(priorityLabel);
+
+        priorityInput.name = 'priority'
+        priorityInput.setAttribute('id', 'taskPriority');
+        lowOption.value = 'Low';
+        lowOption.textContent = 'Low';
+        mediumOption.value = 'Medium';
+        mediumOption.textContent = 'Medium';
+        highOption.value = 'High';
+        highOption.textContent = 'High';
+        priorityInput.appendChild(lowOption);
+        priorityInput.appendChild(mediumOption);
+        priorityInput.appendChild(highOption);
+        form.appendChild(priorityInput);
+
+        submitBtn.setAttribute('type', 'submit');
+        submitBtn.setAttribute('id', 'edit-submit');
+        submitBtn.classList.add('submit-btn');
+        submitBtn.textContent = 'Submit';
+
+        formContainer.appendChild(title);
+        formContainer.appendChild(closeBtn);
+        formContainer.appendChild(form);
+        formContainer.appendChild(submitBtn);
+
+        modal.appendChild(overlay);
+        modal.appendChild(formContainer);
+
+        element.appendChild(modal);
+    }
+
+    static toggleEditModal () {
+        const modal = document.querySelector('.edit-modal');
+        modal.classList.toggle('active');
     }
 }
