@@ -8,21 +8,24 @@ export default class UI {
         const ToDoList = new List();
 
         UI.Project(ToDoList);
-        UI.addTask();
-        UI.createTask(ToDoList);
-        UI.editTask(ToDoList);
+        UI.Task(ToDoList);
 
-        const today = document.getElementById('default-projects');
-        today.addEventListener('click', () => {
-            console.log(ToDoList);
-        })
-
-        // UI.FixTask(ToDoList);
+        // const today = document.getElementById('default-projects');
+        // today.addEventListener('click', () => {
+        //     console.log(ToDoList.updateThisWeekProject());
+        // })
     }
 
     static Project(list) {
         UI.addProject();
         UI.createProject(list);
+        UI.loadDefaultProjects(list);
+    }
+
+    static Task(list) {
+        UI.addTask();
+        UI.createTask(list);
+        UI.editTask(list);
     }
 
     static addProject() {
@@ -102,7 +105,7 @@ export default class UI {
             project.addTask(task);
 
             DOM.toggleTaskModal();
-            DOM.createTask(title.value, date.value, priority.value, false);
+            DOM.createTask(title.value, task.getDateFormatted(), priority.value, false);
 
             UI.addIconListeners(project, task);
         })
@@ -116,8 +119,20 @@ export default class UI {
         }
 
         tasks.forEach(task => {
-            DOM.createTask(task.getTitle, task.getDate, task.getPriority, task.getCompletion);
+            DOM.createTask(task.getTitle, task.getDateFormatted(), task.getPriority, task.getCompletion);
             UI.addIconListeners(project, task);
+        })
+    }
+
+    static loadStrippedTasks(project) {
+        const tasks = project.getTasks;
+
+        if (project.getLength() === 0) {
+            return;
+        }
+
+        tasks.forEach(task => {
+            DOM.createStrippedTask(task.getTitle, task.getDateFormatted(), task.getPriority, task.getCompletion);
         })
     }
 
@@ -193,6 +208,25 @@ export default class UI {
         remove.addEventListener('click', () => {
             project.removeTask(task.getID)
             tasks.removeChild(currentTask);
+        })
+    }
+
+    static loadDefaultProjects(list) {
+        const today = document.getElementById('today');
+        const week = document.getElementById('week');
+        const todayProject = list.getProject(0);
+        const weekProject = list.getProject(1);
+
+        today.addEventListener('click', () => {
+            DOM.removeTasks();
+            list.updateTodayProject();
+            UI.loadStrippedTasks(todayProject);
+        })
+
+        week.addEventListener('click', () => {
+            DOM.removeTasks();
+            list.updateThisWeekProject();
+            UI.loadStrippedTasks(weekProject);
         })
     }
 }
