@@ -3,6 +3,7 @@ export default class Project {
         this.name = name;
         this.tasks = [];
         this.id = id;
+        this.current = 0;
     }
 
     get getName() {
@@ -17,12 +18,24 @@ export default class Project {
         return this.id;
     }
 
+    get getCurrent() {
+        return this.current;
+    }
+
+    set setCurrent(index) {
+        this.current = index;
+    }
+
     addTask(task) {
         this.tasks.push(task);
     }
 
     removeTask(index) {
         delete this.tasks[index];
+    }
+
+    getTask(index) {
+        return this.tasks[index];
     }
 
     getLength() {
