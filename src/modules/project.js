@@ -12,6 +12,10 @@ export default class Project {
         return this.name;
     }
 
+    set setTasks(tasks) {
+        this.tasks = tasks;
+    }
+
     get getTasks() {
         return this.tasks;
     }
@@ -46,6 +50,10 @@ export default class Project {
 
     getTasksToday() {
         return this.tasks.filter(task => {
+            if (task === null) {
+                return
+            }
+
             const date = new Date(task.getDateFormatted());
             return isToday(toDate(date));
         })
@@ -53,6 +61,10 @@ export default class Project {
 
     getTasksThisWeek() {
         return this.tasks.filter(task => {
+            if (task === null) {
+                return
+            }
+            
             const date = new Date(task.getDateFormatted());
             return isThisWeek(toDate(date));
         })
