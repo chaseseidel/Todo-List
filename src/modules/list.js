@@ -8,16 +8,20 @@ export default class List {
         this.current = 2;
     }
 
-    getLength() {
-        return this.projects.length;
-    }
-
     set setCurrentProject(index) {
         this.current = index;
     }
 
     get getCurrentProject() {
         return this.current;
+    }
+
+    set setProjects(projects) {
+        this.projects = projects;
+    }
+
+    get getProjects() {
+        return this.projects;
     }
 
     addProject(project) {
@@ -40,7 +44,7 @@ export default class List {
         this.projects[0].tasks = [];
 
         this.projects.forEach(project => {
-            if (project.getName === 'Today' || project.getName == 'This Week') {
+            if (project === null || project.getName === 'Today' || project.getName == 'This Week') {
                 return
             }
 
@@ -56,7 +60,7 @@ export default class List {
         this.projects[1].tasks = [];
 
         this.projects.forEach(project => {
-            if (project.getName === 'Today' || project.getName == 'This Week') {
+            if (project === null || project.getName === 'Today' || project.getName == 'This Week') {
                 return
             }
 
