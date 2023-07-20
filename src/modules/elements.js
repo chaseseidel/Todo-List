@@ -190,6 +190,30 @@ export default class DOM {
         projectName.value = '';
     }
 
+    static createStorageProject(object) {
+        const userProjects = document.getElementById('user-projects');
+        const project = document.createElement('button');
+        const image = new Image();
+        const name = document.createElement('p');
+        const projectName = document.getElementById('name');
+        const deleteBtn = new Image()
+
+        project.className = 'user-project project';
+        image.src = projectIcon;
+        image.alt = 'Project Icon';
+        name.textContent = object.name;
+        deleteBtn.src = deleteIcon;
+        deleteBtn.alt = 'Delete Icon';
+        deleteBtn.classList.add('delete');
+
+        project.appendChild(image);
+        project.appendChild(name);
+        project.appendChild(deleteBtn);
+
+        userProjects.appendChild(project);
+        projectName.value = '';
+    }
+
     static createTaskModal(element) {
         const modal = document.createElement('div');
         const overlay = document.createElement('div');
